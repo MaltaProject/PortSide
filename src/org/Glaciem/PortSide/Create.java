@@ -21,6 +21,7 @@ public class Create
 				PortSide.finished = true;
 			else if (Display.isActive()) 
 			{
+				Input.quit();
 				Graphics.render();
 				Display.sync(FRAMERATE);
 			}

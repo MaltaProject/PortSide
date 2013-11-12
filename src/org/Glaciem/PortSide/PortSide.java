@@ -1,11 +1,5 @@
 package org.Glaciem.PortSide;
 import org.lwjgl.Sys;
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.opengl.Display;
-import java.io.File;
-
-import static org.lwjgl.opengl.GL11.*;
-
 
 public class PortSide {
 	public static boolean finished;

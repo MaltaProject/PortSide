@@ -4,12 +4,8 @@ import org.lwjgl.opengl.Display;
 
 import static org.lwjgl.opengl.GL11.*;
 
-public class Close 
-{
-
-	public static void cleanup() 
-	{
+public class Close {
+	public static void cleanup() {
 		Display.destroy();
 	}
-
 }

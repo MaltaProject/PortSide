@@ -12,17 +12,15 @@ public class Create
 	
 	public static void run() 
 	{
-		while (!Icarus.finished) 
+		while (!PortSide.finished) 
 		{
 
 			Display.update();
 
 			if (Display.isCloseRequested()) 
-				Icarus.finished = true;
+				PortSide.finished = true;
 			else if (Display.isActive()) 
 			{
-				InputLogic.quit();
-				InputLogic.move();
 				Graphics.render();
 				Display.sync(FRAMERATE);
 			}

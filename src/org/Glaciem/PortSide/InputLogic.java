@@ -1,3 +1,4 @@
+package org.Glaciem.PortSide;
 import org.lwjgl.input.Keyboard;
 
 public class InputLogic extends Icarus

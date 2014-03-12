@@ -112,9 +112,15 @@
 
             var pos = camera.position.clone().add( dir.multiplyScalar( distance ) );
             
+            var angle = Math.atan2(pos.y,pos.x); //need to store current angle of ship
+            
+            new TWEEN.Tween(selection.rotation ).to( {
+						z: angle }, 4000 )
+            .easing( TWEEN.Easing.Linear.None).start();
+            
             new TWEEN.Tween(selection.position).to( {
                         x: pos.x,
-						y: pos.y }, 2000 )
+						y: pos.y }, 8000 )
             .easing( TWEEN.Easing.Linear.None).start();
             selected = false;
             console.log(event.clientX + "--" + event.clientY);

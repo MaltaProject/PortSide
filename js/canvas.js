@@ -36,7 +36,7 @@
         loader.load('data/models/'+type+'.js', function (geometry) {
         // create a new material
         var material = new THREE.MeshBasicMaterial({
-        map: THREE.ImageUtils.loadTexture('data/textures/'+type+'.png'),  // specify and load the texture
+        map: THREE.ImageUtils.loadTexture('data/textures/'+type+'.png', , anisotropy = 16),  // specify and load the texture
         });
   
           // create a mesh with models geometry and material
@@ -116,7 +116,7 @@
             var angle = Math.atan2(pos.y,pos.x); //need to store current angle of ship
             
             new TWEEN.Tween(selection.rotation ).to( {
-						z: angle }, 4000 )
+						z: angle }, 2000 )
             .easing( TWEEN.Easing.Linear.None).start();
             
             new TWEEN.Tween(selection.position).to( {

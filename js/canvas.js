@@ -13,8 +13,9 @@
         
     projector = new THREE.Projector();
 
-    var renderer = new THREE.WebGLRenderer();
+    var renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor( 0x33CCFF, 1);
     document.body.appendChild(renderer.domElement);
     document.addEventListener( 'mousedown', onDocumentMouseDown, false );
     
@@ -123,7 +124,6 @@
 						y: pos.y }, 8000 )
             .easing( TWEEN.Easing.Linear.None).start();
             selected = false;
-            console.log(event.clientX + "--" + event.clientY);
         }
         else if ( intersects.length > 0 ) 
         {

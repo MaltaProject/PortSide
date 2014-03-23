@@ -1,3 +1,4 @@
+    var socketio = io.connect("http://198.27.66.228:8080");
     var clock = new THREE.Clock();
     var scene = new THREE.Scene();
     var keyboard = new THREEx.KeyboardState();
@@ -5,6 +6,41 @@
     var projector;
     var selected = false; //if a user has an item selected
     var selection; //stores the selected item
+    
+    var materials = [];
+    var geometrys = [];
+    
+    socketio.on("msgc", function(data) {
+			if(typeof objects[data.id] !== 'undefined' || objects[data.id] !== null)
+			{
+				addModelFS("patrol",data.xpos,data.ypos);
+			}
+			else
+			{
+				objects[data.id].position.x = data.xpos;
+				objects[data.id].position.y = data.ypos;
+			}
+	});
+	
+	socketio.on("msgcm", function(data) {
+		new TWEEN.Tween(objects[data.id].rotation ).to( {
+			z: (data.angle) }, (data.time/4) )
+        .easing( TWEEN.Easing.Linear.None).start();
+            
+        new TWEEN.Tween(objects[data.id].position).to( {
+            x: data.xpos,
+			y: data.ypos }, data.time )
+        .easing( TWEEN.Easing.Linear.None).start();
+	});
+	
+	socketio.on("players", function(data) {
+		if(data >= 2)
+		{
+			obj = document.getElementById("wait");
+			document.body.removeChild(obj);
+		}
+	});
+
     
     var mouse = { x: 0, y: 0 }, INTERSECTED;
 
@@ -22,14 +58,48 @@
     THREEx.WindowResize(renderer, camera);
     
     animate();
+	loadShips();
+	
+	function loadShips()
+	{
+		var type = 'patrol';
+        var loader = new THREE.JSONLoader(); // init the loader util
 
+        // init loading
+        loader.load('data/models/'+type+'.js', function (geometry) {
+        // create a new material
+        var material = new THREE.MeshBasicMaterial({
+        map: THREE.ImageUtils.loadTexture('data/textures/'+type+'.png', anisotropy = 16),  // specify and load the texture
+        });
+            geometrys.push(geometry);
+            materials.push(material);
+            console.log("Bullshit");
+        });
+	}
     /*
      * type  gives the type of model to be loaded
      * location  gives the location to draw the model
      * iff gives the team that the ship should be assigned to
      */
-    function addModel(type, location, iff)
+    function addModel(type, x, y)
     {
+		console.log("Fuck You");
+        var mesh = new THREE.Mesh(
+            geometrys[0],
+            materials[0]
+        );
+          
+        mesh.position.set(x, y, 0);
+          
+        scene.add(mesh);
+        objects.push(mesh);
+        animate();
+        sendShip(objects.length-1);
+    }
+    
+    function addModelFS(type, x, y)
+    {
+		console.log("adding");
         var loader = new THREE.JSONLoader(); // init the loader util
 
         // init loading
@@ -45,10 +115,11 @@
             material
         );
           
-        
+        mesh.position.set(x, y, 0);
           
         scene.add(mesh);
         objects.push(mesh);
+        animate();
         });
         
     }
@@ -57,7 +128,6 @@
     {
         requestAnimationFrame( animate );
         render();
-        input();
         update();
     }
     
@@ -65,26 +135,6 @@
     {
         TWEEN.update();
         renderer.render( scene, camera );
-    }
-    
-    function input()
-    {
-        var moveDistance = 10 * clock.getDelta(); 
-
-        if ( keyboard.pressed("left") ) 
-            mesh.translateX( -1 );
-            
-        if ( keyboard.pressed("right") ) 
-            mesh.translateX(  1 );
-
-        if ( keyboard.pressed("A") )
-            mesh.translateX( -moveDistance );
-            
-        if ( keyboard.pressed("D") )
-            mesh.translateX(  moveDistance );
-        
-        if ( keyboard.pressed("V") )
-            addModel("patrol",1,3);
     }
     
     function onDocumentMouseDown( event ) 
@@ -113,14 +163,15 @@
 
             var pos = camera.position.clone().add( dir.multiplyScalar( distance ) );
             
-            var angle = Math.atan2(pos.y,pos.x); //need to store current angle of ship
+            var angle = Math.atan2(pos.y-selection.position.y,pos.x-selection.position.x); 
             
             var time = (pointDistance(selection.position.x, selection.position.y, pos.x, pos.y))/0.0125;
             
+            sendShipMovement(selection.id, pos, time, angle)
+            
             new TWEEN.Tween(selection.rotation ).to( {
-						z: angle }, (time/4) )
+						z: (angle) }, (time/4) )
             .easing( TWEEN.Easing.Linear.None).start();
-            console.log(time);
             
             new TWEEN.Tween(selection.position).to( {
                         x: pos.x,
@@ -138,7 +189,42 @@
             selected = false;
         }
     }
+    
+    function sink(id)
+    {
+        scene.remove(id[0].object);
+        animate();
+    }
 
+	//networking block
+	
+	function sendShip(i) 
+	{
+			var w = objects[i].position.clone();
+			var x = w.x;
+			var y = w.y;
+			
+			var shipdata = {
+				id: i,
+				xpos: x,
+				ypos: y
+			}
+			socketio.emit("msgs", shipdata);
+	}
 
-
-//LSALB5
+	function sendShipMovement(selid, pos, time, angle) 
+	{
+			var i = selid - 3;
+			var w = objects[i].position.clone();
+			var x = w.x;
+			var y = w.y;
+			
+			var shipdata = {
+				id: i,
+				time: time,
+				angle: angle,
+				xpos: pos.x,
+				ypos: pos.y
+			}
+			socketio.emit("msgsm", shipdata);
+	}

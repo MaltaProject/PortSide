@@ -2,15 +2,19 @@
 	<head>
 		<title>PortSide Version 0.0.1</title>
 		<link rel="stylesheet" type="text/css" href="css/style.css">
-        <script src="https://rawgithub.com/mrdoob/three.js/master/build/three.js"></script>
-        <script src="js/THREEx.keyboardstate.js"></script>
-        <script src="js/THREEx.WindowResize.js"></script>
-        <script src="js/input.js"></script>
-		<script src="js/update.js"></script>
-        <script src="js/tween.min.js"></script>
-        <script src="js/portsideMath.js"></script>
+        <script type="text/javascript" src="js/three.min.js"></script>
+        <script type="text/javascript" src="js/THREEx.keyboardstate.js"></script>
+        <script type="text/javascript" src="js/THREEx.WindowResize.js"></script>
+		<script type="text/javascript" src="js/update.js"></script>
+        <script type="text/javascript" src="js/tween.min.js"></script>
+        <script type="text/javascript" src="js/portsideMath.js"></script>
+        <script type="text/javascript" src="/socket.io/socket.io.js"></script>
 	</head>
 	<body>
+		<div id='makeship' onclick="addModel('patrol',1,1)"></div>
+		<div id='wait'>
+			<p>Waiting for other players</p>
+		</div>
         <script src="js/canvas.js"></script>
 	</body>
 </html>

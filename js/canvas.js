@@ -2,8 +2,10 @@
     var clock = new THREE.Clock();
     var scene = new THREE.Scene();
     var keyboard = new THREEx.KeyboardState();
+    
     var objects = [];
     var projector;
+    
     var selected = false; //if a user has an item selected
     var selection; //stores the selected item
     
@@ -73,17 +75,11 @@
         });
             geometrys.push(geometry);
             materials.push(material);
-            console.log("Bullshit");
         });
 	}
-    /*
-     * type  gives the type of model to be loaded
-     * location  gives the location to draw the model
-     * iff gives the team that the ship should be assigned to
-     */
+	
     function addModel(type, x, y)
     {
-		console.log("Fuck You");
         var mesh = new THREE.Mesh(
             geometrys[0],
             materials[0]
@@ -99,20 +95,9 @@
     
     function addModelFS(type, x, y)
     {
-		console.log("adding");
-        var loader = new THREE.JSONLoader(); // init the loader util
-
-        // init loading
-        loader.load('data/models/'+type+'.js', function (geometry) {
-        // create a new material
-        var material = new THREE.MeshBasicMaterial({
-        map: THREE.ImageUtils.loadTexture('data/textures/'+type+'.png', anisotropy = 16),  // specify and load the texture
-        });
-  
-          // create a mesh with models geometry and material
-        var mesh = new THREE.Mesh(
-            geometry,
-            material
+		var mesh = new THREE.Mesh(
+            geometrys[0],
+            materials[0]
         );
           
         mesh.position.set(x, y, 0);
@@ -120,7 +105,6 @@
         scene.add(mesh);
         objects.push(mesh);
         animate();
-        });
         
     }
     

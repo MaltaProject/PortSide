@@ -12,6 +12,8 @@
     var materials = [];
     var geometrys = [];
     
+    var active = false; //is the game room active
+    
     socketio.on("msgc", function(data) {
 			if(typeof objects[data.id] !== 'undefined' || objects[data.id] !== null)
 			{
@@ -36,10 +38,17 @@
 	});
 	
 	socketio.on("players", function(data) {
-		if(data >= 2)
+		if(data == 2)
 		{
 			obj = document.getElementById("wait");
 			document.body.removeChild(obj);
+			active = true;
+		}
+		else if(data < 2 || data > 2 && active == true)
+		{
+			objects = [];
+			w = document.createElement('div');
+			w.id = 'wait';
 		}
 	});
 

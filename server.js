@@ -37,13 +37,22 @@ var io = require('socket.io').listen(app);
 var players = 0;
 
 io.sockets.on('connection', function(socket) {
+	
 	players++;
+	
 	io.sockets.emit('players', players);
+	
 	socket.on('msgs', function(data) { 
 	socket.broadcast.emit("msgc" , data );
 	});
+	
 	socket.on('msgsm', function(data) { 
 	socket.broadcast.emit("msgcm" , data );
+	});
+	
+	socket.on('disconnect', function() { 
+	players--;
+	socket.broadcast.emit("players" , players );
 	});
 });
 

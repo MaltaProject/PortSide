@@ -73,7 +73,7 @@
 	
 	function loadShips()
 	{
-		var type = 'patrol';
+		var type = 'command';
         var loader = new THREE.JSONLoader(); // init the loader util
 
         // init loading
@@ -98,6 +98,7 @@
           
         scene.add(mesh);
         objects.push(mesh);
+        console.log("ship pushed");
         animate();
         sendShip(objects.length-1);
     }

@@ -4,15 +4,6 @@ body
     padding:0;
 }
 
-#makeship
-{
-	position: absolute;
-	height:20px;
-	width:20px;
-	background-color:red;
-	z-index: 3;
-}
-
 #wait
 {
 	position: fixed;
@@ -21,9 +12,9 @@ body
 	margin-top: -30px;
 	margin-left: -100px;
 	width:200px;
-	height:60px;
+	height:140px;
 	background-color:green;
-	z-index: 3;
+	z-index: 5;
 	opacity:0.6;
 	border-bottom-left-radius: 15px 15px;
     border-bottom-right-radius: 15px 15px;
@@ -51,7 +42,46 @@ body
 	margin-top:10px;
 	height:40px;
 	width:40px;
-	z-index: 5;
+	z-index: 3;
 	cursor:default;
 	background-image: url(../data/UI/disconnect.png);
+}
+
+#UI1
+{
+	position: fixed;
+	bottom: 0%;
+	left: 50%;
+	margin-bottom: 20px;
+	margin-left: -20px;
+	width:40px;
+	height:40px;
+	z-index: 3;
+	cursor:default;
+	background-image: url(../data/UI/addShip.png);
+}
+
+#input[type=text],
+#inputbtn
+{
+	display: block;
+	z-index: 6;
+    margin : 0 auto;
+}
+
+#inputbtn
+{
+    background-color: #005200;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius:6px;
+    font-size: 16px;
+    text-decoration: none;
+    cursor: pointer;
+    border:none;
+}
+
+canvas
+{
+	z-index: 0;
 }

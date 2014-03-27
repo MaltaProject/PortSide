@@ -11,11 +11,17 @@
         <script type="text/javascript" src="/socket.io/socket.io.js"></script>
 	</head>
 	<body>
-		<div id='makeship' onclick="addModel('patrol',1,1)"></div>
 		<div id='disconnect'></div>
+		<div id='UI1' onclick="addModel('patrol',1,1)"></div>
 		<div id='wait'>
-			<p id="waittxt" >Waiting for other players</p>
+			<p id="waittxt" >Join or create a room</p>
+			<form action="demo_form.asp">
+				<input id="input" type="text" autofocus><br>
+				<input id="inputbtn" type="submit" value="Join / Create">
+			</form>
 		</div>
-        <script src="js/canvas.js"></script>
+		<div id="canvas">
+			<script src="js/canvas.js"></script>
+		</div>
 	</body>
 </html>

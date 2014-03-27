@@ -1,5 +1,14 @@
 PortSide
 ========
 
-Portside is a real time top down naval strategy game where players must destroy the other team's (or teams') navy. Portside uses WebGL and the threejs library for graphics. Also makes use of THREEx.js for rendering and 
-user input utilites. 
+PortSide is real time naval strategy game, built in browser using WebGL, in which players battle one another in an attempt to gain full control over the waters of the game world.
+
+## Features ##
+* Multiplayer (Currently only 2 players at a time)
+
+## Third party libraries used ##
+* Threejs
+* socket.io
+* THREEx
+* node
+

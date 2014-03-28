@@ -27,11 +27,12 @@
 	});
 	
 	socketio.on("msgcm", function(data) {
-		new TWEEN.Tween(objects[data.id].rotation ).to( {
+		removeTweens(objects[data.id]);
+		new TWEEN.Tween(objects[data.id].rotation, {override:true}).to( {
 			z: (data.angle) }, (data.time/4) )
         .easing( TWEEN.Easing.Linear.None).start();
             
-        new TWEEN.Tween(objects[data.id].position).to( {
+        new TWEEN.Tween(objects[data.id].position, {override:true}).to( {
             x: data.xpos,
 			y: data.ypos }, data.time )
         .easing( TWEEN.Easing.Linear.None).start();
@@ -98,7 +99,6 @@
           
         scene.add(mesh);
         objects.push(mesh);
-        console.log("ship pushed");
         animate();
         sendShip(objects.length-1);
     }
@@ -162,12 +162,11 @@
             var time = (pointDistance(selection.position.x, selection.position.y, pos.x, pos.y))/0.0125;
             
             sendShipMovement(selection.id, pos, time, angle)
-            
-            new TWEEN.Tween(selection.rotation ).to( {
+            new TWEEN.Tween(selection.rotation, {override:true}).to( {
 						z: (angle) }, (time/4) )
             .easing( TWEEN.Easing.Linear.None).start();
             
-            new TWEEN.Tween(selection.position).to( {
+            new TWEEN.Tween(selection.position, {override:true}).to( {
                         x: pos.x,
 						y: pos.y }, time )
             .easing( TWEEN.Easing.Linear.None).start();

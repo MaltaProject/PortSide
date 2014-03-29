@@ -1,3 +1,4 @@
+//calculates distance between ship origin and ship destination
 function pointDistance(x, y, xp, yp)
 {
 	dx = (xp - x);

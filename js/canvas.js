@@ -5,9 +5,12 @@
     //3DObject array
     objects = [];
     
+    //room and player ids
+    room = "";
+    playerid = "";
     
 	//socket.io bind
-	socketio = io.connect("http://198.27.66.228:8080"); 
+	socketio = io.connect("http://198.27.66.228:8090"); 
     
     //Three.js projector for raycasting
     var projector = new THREE.Projector();

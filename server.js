@@ -31,10 +31,11 @@ var app = http.createServer(function(request, response) {
       response.end();
     });
   });
-}).listen(8080);
+}).listen(8090);
 
 var io = require('socket.io').listen(app);
 var players = 0;
+var room = [];
 
 io.sockets.on('connection', function(socket) {
 	
@@ -48,6 +49,37 @@ io.sockets.on('connection', function(socket) {
 	
 	socket.on('msgsm', function(data) { 
 	socket.broadcast.emit("msgcm" , data );
+	});
+	
+	socket.on('userdata', function(data) 
+	{ 
+		var found = false;
+		
+		for(var i; i < room.length; i++)
+		{
+			
+			if(room[i].roomName == data.roomName)
+			{
+				found = true;
+				room[i].playerTwo = data.userName;
+				room[i].active = true;
+				io.sockets.emit('join', room[i]);
+			}
+			
+		}
+		
+		if(found == false)
+		{
+			room[room.length] = 
+			{
+				roomName: data.roomName,
+				playerOne: data.userName,
+				playerTwo: "",
+				active: false
+			}
+			io.sockets.emit('join', room[room.length]);
+		}
+		
 	});
 	
 	socket.on('disconnect', function() { 

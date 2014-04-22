@@ -77,3 +77,20 @@ function sendShipMovement(selid, pos, time, angle)
 		}
 		socketio.emit("msgsm", shipdata);
 }
+
+function roomConnect()
+{
+	var userdata
+	{
+		roomName = document.getElementById('input').value;
+		userName = document.getElementById('inputname').value;
+	}
+	if(room != "")
+	{
+		socketio.emit("userdata", userdata);
+	}
+	else
+	{
+		
+	}
+}
